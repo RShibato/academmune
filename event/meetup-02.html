@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>academmune Meetup #02 | 2026.5.28</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #c8e632;
+  --green-dark: #a8c820;
+  --teal: #7c5cbf;
+  --navy: #1a2d5a;
+  --red: #c0392b;
+  --white: #ffffff;
+  --bg: #f5f5f0;
+  --text: #1a1a1a;
+  --muted: #555;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ─── TRIANGLES ─── */
+.tri {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.tri-teal  { border-left: 28px solid transparent; border-right: 28px solid transparent; border-bottom: 48px solid var(--teal); }
+.tri-navy  { border-left: 22px solid transparent; border-right: 22px solid transparent; border-bottom: 38px solid var(--navy); }
+.tri-red   { border-left: 18px solid transparent; border-right: 18px solid transparent; border-bottom: 30px solid var(--red); }
+.tri-green { border-left: 24px solid transparent; border-right: 24px solid transparent; border-bottom: 42px solid var(--green-dark); }
+.tri-white { border-left: 16px solid transparent; border-right: 16px solid transparent; border-bottom: 28px solid rgba(255,255,255,0.6); }
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--green);
+  position: relative;
+  overflow: hidden;
+  padding: 64px 48px 72px;
+}
+
+.hero .tri:nth-child(1)  { top: 20px;  left: 5%;  }
+.hero .tri:nth-child(2)  { top: 60px;  right: 8%; transform: rotate(15deg); }
+.hero .tri:nth-child(3)  { top: 140px; left: 2%;  transform: rotate(-10deg); }
+.hero .tri:nth-child(4)  { bottom: 40px; left: 12%; transform: rotate(20deg); }
+.hero .tri:nth-child(5)  { bottom: 80px; right: 5%; transform: rotate(-5deg); }
+.hero .tri:nth-child(6)  { top: 30px;  left: 40%; transform: rotate(8deg); }
+.hero .tri:nth-child(7)  { bottom: 20px; right: 20%; transform: rotate(12deg); }
+.hero .tri:nth-child(8)  { top: 100px; right: 30%; }
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 6px 16px;
+  margin-bottom: 28px;
+}
+
+.hero-title {
+  font-size: clamp(24px, 4.5vw, 48px);
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.hero-title span {
+  color: var(--navy);
+}
+
+.hero-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.hero-chip {
+  background: var(--white);
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ─── SECTION COMMON ─── */
+.section {
+  padding: 64px 48px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  max-width: 60px;
+  height: 2px;
+  background: var(--teal);
+}
+
+/* ─── ABOUT ─── */
+.about-wrap {
+  background: var(--white);
+  padding: 40px;
+  border-left: 4px solid var(--green);
+}
+
+.about-text {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: var(--text);
+}
+
+.about-text p + p {
+  margin-top: 1.6em;
+}
+
+.about-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.about-meta-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  margin-bottom: 6px;
+}
+
+.about-meta-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.about-meta-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.venue-link {
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.venue-link:hover { color: var(--teal); }
+
+/* ─── GUEST ─── */
+.guest-wrap {
+  background: var(--bg);
+  padding: 64px 0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.guest-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.guest-card {
+  background: var(--white);
+  padding: 40px;
+  border-left: 4px solid var(--teal);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: start;
+}
+
+.guest-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+
+.guest-name {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.guest-name-en {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.guest-affil {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.guest-bio {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.guest-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.guest-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.guest-keyword {
+  background: var(--bg);
+  border: 1px solid #ddd;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* ─── PROGRAM ─── */
+.program-wrap {
+  background: var(--navy);
+  padding: 64px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.program-wrap .tri:nth-child(1) { top: 24px; right: 6%; }
+.program-wrap .tri:nth-child(2) { bottom: 24px; left: 4%; transform: rotate(10deg); }
+
+.program-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.program-wrap .section-title {
+  color: var(--green);
+}
+.program-wrap .section-title::after {
+  background: var(--green);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.timeline-item:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+
+.timeline-time {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green);
+  padding-top: 2px;
+}
+
+.timeline-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.timeline-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+}
+
+.timeline-item.highlight .timeline-title {
+  color: var(--green);
+}
+
+/* ─── FORM ─── */
+.form-wrap-outer {
+  background: var(--white);
+  padding: 64px 0;
+  border-top: 4px solid var(--green);
+}
+
+.form-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.form-title {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.form-note {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-bottom: 32px;
+  line-height: 1.8;
+}
+
+.form-embed {
+  border: 1px solid #e0e0e0;
+}
+
+/* ─── FOOTER ─── */
+.footer-right {
+  text-align: right;
+}
+
+.footer-organizer {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 4px;
+}
+
+footer {
+  background: var(--navy);
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--green);
+  letter-spacing: 0.05em;
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .hero { padding: 48px 24px 56px; }
+  .section { padding: 48px 24px; }
+  .about-wrap { padding: 24px 20px; }
+  .guest-inner { padding: 0 24px; }
+  .guest-card { grid-template-columns: 1fr; gap: 0; }
+  .program-inner { padding: 0 24px; }
+  .form-inner { padding: 0 24px; }
+  .timeline-item { grid-template-columns: 68px 1fr; gap: 16px; }
+  .timeline-time { font-size: 15px; }
+  .about-meta { flex-direction: column; gap: 20px; }
+  footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
+}
+
+/* ─── ANIMATION ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-tag      { animation: fadeUp 0.5s ease 0.1s both; }
+.hero-title    { animation: fadeUp 0.6s ease 0.25s both; }
+.hero-meta-row { animation: fadeUp 0.6s ease 0.45s both; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="tri tri-teal"></div>
+  <div class="tri tri-navy"></div>
+  <div class="tri tri-red"></div>
+  <div class="tri tri-white"></div>
+  <div class="tri tri-green"></div>
+  <div class="tri tri-teal"></div>
+  <div class="tri tri-navy"></div>
+  <div class="tri tri-red"></div>
+
+  <div class="hero-inner">
+    <div class="hero-tag">academmune Meetup #02</div>
+    <h1 class="hero-title">
+      研究者と企業がゆるく交流する<br>
+      <span>academmune Meetup #02</span>
+    </h1>
+    <div class="hero-meta-row">
+      <span class="hero-chip">2026年5月28日（木）19:00〜</span>
+      <span class="hero-chip">〆株式会社（東京・目黒）</span>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<div class="section">
+  <div class="section-title">About</div>
+  <div class="about-wrap">
+    <div class="about-text">
+      <p>研究者と企業が接点を持つ機会は、共同研究や出資といった目的が前提になりがちです。互いの価値観や文化を知る前に具体的な話が進んでしまうため、連携がうまく噛み合わないケースも少なくありません。</p>
+      <p>academmune Meetup は、そうした「目的ありきの出会い」とは異なる場です。毎回ゲスト研究者を迎え、研究者と企業がフラットに対話する小規模な会を月に一度開いています。趣旨説明のあと、ゲストに10分ほど話してもらい、そのままネットワーキングへ。肩書きや目的を脇に置いた、ゆるい時間をつくります。</p>
+    </div>
+    <div class="about-meta">
+      <div class="about-meta-item">
+        <div class="about-meta-label">DATE &amp; TIME</div>
+        <div class="about-meta-value">2026年5月28日（木）19:00〜</div>
+      </div>
+      <div class="about-meta-item">
+        <div class="about-meta-label">VENUE</div>
+        <div class="about-meta-value"><a href="https://www.shime.co/" target="_blank" class="venue-link">〆株式会社</a></div>
+        <div class="about-meta-note">〒153-0042 東京都目黒区大橋1-1-11 J-SQUARE 1F</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GUEST -->
+<div class="guest-wrap">
+  <div class="guest-inner">
+    <div class="section-title">Guest</div>
+    <div class="guest-card">
+      <div>
+        <div class="guest-label">GUEST RESEARCHER</div>
+        <div class="guest-name">井出 和希</div>
+        <div class="guest-name-en">Kazuki Ide</div>
+        <div class="guest-affil">
+          大阪大学 感染症総合教育研究拠点 特任准教授<br>
+          （兼）社会技術共創研究センター（ELSIセンター）<br>
+          （兼）COデザインセンター
+        </div>
+        <div class="guest-bio">
+          学術情報流通・倫理的・法的・社会的課題（ELSI）・メタサイエンスを専門とする。研究者や研究を取り巻く価値観・評価のあり方を問い続け、学術出版・AI・ファッションまで幅広く研究・実践を展開している。
+        </div>
+        <div class="guest-keywords">
+          <span class="guest-keyword">ELSI</span>
+          <span class="guest-keyword">学術情報流通</span>
+          <span class="guest-keyword">メタサイエンス</span>
+          <span class="guest-keyword">オープンサイエンス</span>
+          <span class="guest-keyword">研究倫理</span>
+        </div>
+        <a href="https://researchmap.jp/ide_k" target="_blank" class="guest-link">researchmap →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap-outer">
+  <div class="form-inner">
+    <div class="section-title">Apply</div>
+    <h2 class="form-title">参加申し込み</h2>
+    <p class="form-note">参加をご希望の方は以下のフォームよりお申し込みください。</p>
+    <div class="form-embed">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScdo9jATArHIywtCh5gXBsYF6U0KjWBitE4ONxEg8NZf0ac-w/viewform?embedded=true" width="100%" height="826" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">academmune</div>
+  <div class="footer-right">
+    <div class="footer-organizer">主催：アカデミスト株式会社</div>
+    <div class="footer-copy">© 2026 academist, Inc.</div>
+  </div>
+</footer>
+
+</body>
+</html>
